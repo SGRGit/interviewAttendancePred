@@ -154,7 +154,7 @@ def submit():
         f.write(finop)
         f.close()
         
-    return render_template('appointment.html', prediction_text = 'Appointment Chance {} %'.format(prediction), patient_name = format(candname))
+    return render_template('appointment.html', prediction_text = 'Attendance Chance {} %'.format(prediction), candidate_name = format(candname))
     
 #@app.route('/refresh', methods=['GET', 'POST'])
 #def refresh():
