@@ -214,7 +214,7 @@ function weeklyGraph(){
         },
         series: [
             {
-                name: 'Total Candidates',
+                name: 'Total Interviews',
                 //data: [0, 0, 11, 9, 0, 8],           
                 data : appointmentsCount,
                 dashStyle: 'ShortDashDot',
