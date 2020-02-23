@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify, render_template
 import pygit
-from git import Repo
+import git
 
 app = Flask(__name__)
 
@@ -11,7 +11,8 @@ def event_calender():
     print(src_path)
     finop_data_path = src_path + '/static/json/JSON_Data.json'
     print(finop_data_path)
-    repo = git.Repo()
+    git = repo.git
+    git.checkout('HEAD', b="my_new_branch")
     previous_branch = repo.active_branch
     print(previous_branch)
 
