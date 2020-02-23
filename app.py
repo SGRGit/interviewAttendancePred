@@ -35,6 +35,7 @@ def submit():
     import os
 
     src_path = os.getcwd()
+    print(src_path)
     int1_data_path = src_path + '/Data/Output/int1.json'
     int2_data_path = src_path + '/Data/Output/int2.json'
     int3_data_path = src_path + '/Data/Output/int3.json'
