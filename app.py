@@ -11,8 +11,7 @@ def event_calender():
     print(src_path)
     finop_data_path = src_path + '/static/json/JSON_Data.json'
     print(finop_data_path)
-    destbranch = git checkout caldata
-    print(destbranch)
+    git checkout caldata
 
 if __name__ == "__main__":
     app.run(debug=True)
