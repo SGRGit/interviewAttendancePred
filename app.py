@@ -3,7 +3,6 @@ import pygit
 import git
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def event_calender():
@@ -11,7 +10,9 @@ def event_calender():
     print(src_path)
     finop_data_path = src_path + '/static/json/JSON_Data.json'
     print(finop_data_path)
-    git checkout caldata finop_data_path
+    repo = git.Repo()
+    previous_branch = repo.active_branch
+    print(previous_branch)
 
 if __name__ == "__main__":
     app.run(debug=True)
