@@ -1,6 +1,7 @@
 import json
 from flask import Flask, jsonify
 import os
+import sys
 import pandas as pd
 import datetime
 from flask_cors import CORS
@@ -11,7 +12,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/')
 def event_calender():
     base_dir = os.getcwd()
-    data_path = base_dir + '/master/static/json/JSON_Data.json'
+    print(base_dir, sys.path)
+    data_path = base_dir + '/static/json/JSON_Data.json'
 
     with open(data_path, "r") as f:
         lines = str(f.readlines())
