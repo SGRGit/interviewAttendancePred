@@ -1,5 +1,6 @@
 import os
 import pygit
+import git
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
