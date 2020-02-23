@@ -2,3 +2,4 @@ Flask==1.1.1
 gunicorn==19.9.0
 flask_cors
 python-git==2018.2.1
+gitpython
