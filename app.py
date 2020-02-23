@@ -1,7 +1,7 @@
+import git
 import os
 from flask import Flask, request, jsonify, render_template
-import pygit
-import git
+from git import Repo
 
 app = Flask(__name__)
 
@@ -11,10 +11,8 @@ def event_calender():
     print(src_path)
     finop_data_path = src_path + '/static/json/JSON_Data.json'
     print(finop_data_path)
-    git = repo.git
-    git.checkout('HEAD', b="my_new_branch")
-    previous_branch = repo.active_branch
-    print(previous_branch)
+    destbranch = git.checkout('caldata')    
+    print(destbranch)
 
 if __name__ == "__main__":
     app.run(debug=True)
