@@ -1,6 +1,6 @@
 import os
 import pygit
-import git
+from git import Repo
 
 app = Flask(__name__)
 
