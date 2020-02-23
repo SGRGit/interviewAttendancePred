@@ -11,7 +11,7 @@ def event_calender():
     print(src_path)
     finop_data_path = src_path + '/static/json/JSON_Data.json'
     print(finop_data_path)
-    destbranch = git.checkout('caldata')    
+    destbranch = git checkout caldata
     print(destbranch)
 
 if __name__ == "__main__":
