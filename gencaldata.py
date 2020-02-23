@@ -95,8 +95,8 @@ def event_calender():
         dlist.append(df_newdict.copy())
 
     return(jsonify(dlist))
-#if __name__ == "__main__":
-#    app.run(debug=True)	
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='7000', threaded=True, debug=True)
+    app.run(debug=True)	
+
+#if __name__ == "__main__":
+#    app.run(host='0.0.0.0', port='7000', threaded=True, debug=True)
