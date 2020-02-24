@@ -109,7 +109,7 @@ var highProbCount = [];
 var finalDateList = [];
 var test = 'Mon';
 //    var urls = 'http://localhost:7000/'
-	var urls = 'https://noshowcaldata.herokuapp.com/caldata'
+	var urls = 'https://interviewattpredictor-app.herokuapp.com/caldata'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
