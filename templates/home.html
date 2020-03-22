@@ -57,8 +57,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <div style="margin-top: 20px;">
-            <h3>Smart Recruitment Application </h3>  
+          <div style="margin-top: 20px; color:black;">
+            <h3><b>Smart Scheduling Predictor</b></h3>  
           </div>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
@@ -96,19 +96,19 @@
             
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('dashboard')}}">
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title"><b>Dashboard</b></span>
                 <i style="padding-left: 10px" class="fa fa-home"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('schedule')}}">
-                <span class="menu-title">Daily Tracker</span>
+                <span class="menu-title"><b>Schedule</b></span>
                 <i style="padding-left: 10px" class="fa fa-calendar"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('appointment')}}">
-                <span class="menu-title">Schedule</span>
+                <span class="menu-title"><b>Schedule Interview</b></span>
                 <i style="padding-left: 10px" class="fa fa-clipboard"></i>
               </a>              
             </li>            
@@ -122,7 +122,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                  <i class="fa fa-home"></i>
-                </span> Dashboard 
+                </span> <b>Monthly Scheduling Metrices</b>
               </h3>
               <nav aria-label="breadcrumb">
                 <!-- <ul class="breadcrumb">
@@ -135,27 +135,29 @@
                   <div class="btn-group">
                    <div class="col-sm-12 col-md-6">
                       <select id="skill" class="form-control" style="background-color: #66b3ff; color: black; font-weight: bold;">
-						 <option value="Java">Java</option>
-						 <option>Select Talent Pool</option>
-							<option value="Cloud">Cloud</option> 
-							<option value=".Net">.Net</option>
-							
-							<option value="Oracle">Oracle</option>
-							<option value="SAP">SAP</option>                           						
-                            <option value="Data">Data</option>  
+						    <option value="SAP SF EC">SAP SF EC</option>
+							<option>Select Talent Pool</option>
+							<option value="SAP SF Comp">SAP SF Comp</option> 
+							<option value="SAP SF LMS">SAP SF LMS</option>							
+							<option value="SAP SF PMGM">SAP SF PMGM</option>
+							<option value="SAP CPI">SAP CPI</option>                           						
+                            <option value="Data Migration">Data Migration</option>  
                       </select> 
                       
                     </div>                    
                   </div>
+				  
                   <div class="btn-group">
                    <div class="col-sm-12 col-md-6">                      
-                      <select id="dates" class="form-control" style="background-color: #5cd6d6; color: black; font-weight: bold">
-                        
-                        <option value="30">Within 1 Month</option>
-                        <option value="none">Select Date</option>
+                      <select id="dates" class="form-control" style="background-color: #5cd6d6; color: black; font-weight: bold">                       
+						<option value="7">Within 7 Days</option>
+						<option value="none">Select Date Range</option>						
+						<option value="15">Within 15 Days</option>
+                        <option value="30">Within 30 Days</option>
+                        <!--<option value="none">Select Date</option>
                         <option value="1">Tomorrow</option>
                         <option value="7">Within 7 Days</option>
-                        <option value="90">Within 3 Month</option>
+                        <option value="90">Within 3 Month</option> -->
                       </select> 
                     </div>                    
                   </div>
@@ -166,81 +168,75 @@
                 </div>
               </nav>
             </div>
-            <div class="row" style="margin-top: 5%;">
-                    <div class="col-md-3 grid-margin">
+            <div class="row" style="margin-left: 50%; margin-top: 3%;">
+                    <div class="col-md-6 grid-margin">
                       <div class="card bg-gradient-info card-img-holder text-white" style="max-height: 100px;">
-                        <div class="card-body" style="padding: 15px">
+                        <div class="card-body" style="padding: 10px">
                           <img src="../static/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                          <h4 class="font-weight-normal mb-3">Total Interviews Planned 
+                          <h4 class="font-weight-normal mb-3">Total Appointments 
                           </h4>
                           <h2 class="mb-5" id="total">0</h2>
                           <!-- <h6 class="card-text">Increased by 60%</h6> -->
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-3 stretch-card grid-margin">
+                    <div class="col-md-6 stretch-card grid-margin">
                       <div class="card bg-gradient-danger card-img-holder text-white" style="max-height: 100px;">
-                        <div class="card-body" style="padding: 15px">
+                        <div class="card-body" style="padding: 10px">
                           <img src="../static/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                          <h4 class="font-weight-normal mb-3">Low Attendance Probability 
+                          <h4 class="font-weight-normal mb-3">Low Probability 
                           </h4>
                           <h2 class="mb-5" id="totalNoShow">0</h2>
                         </div>
                       </div>
                     </div>
                     
-                    <div class="col-md-3 stretch-card grid-margin">
+                    <div class="col-md-6 stretch-card grid-margin">
                       <div class="card bg-gradient-secondary card-img-holder text-white" style="max-height: 100px;">
                         <div class="card-body" style="padding: 15px; color: black; font-weight: bold;">
                           <img src="../static/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                          <h4 class="font-weight-normal mb-3">High Attendance Probalility 
+                          <h4 class="font-weight-normal mb-3">High probalility 
                           </h4>
                           <h2 class="mb-5" id="highProbable">0</h2>
                         </div>
                       </div>
                     </div>  
-					<div class="col-md-3 stretch-card grid-margin">
+					<div class="col-md-6 stretch-card grid-margin">
                       <div class="card bg-gradient-success card-img-holder text-white" style="max-height: 100px;">
                         <div class="card-body" style="padding: 15px">
                           <img src="../static/images/circle.svg" class="card-img-absolute" alt="circle-image" />
-                          <h4 class="font-weight-normal mb-3">Total Interviews Confirmed 
+                          <h4 class="font-weight-normal mb-3">Total Confirmed 
                           </h4>
                           <h2 class="mb-5" id="confirm">0</h2>
                         </div>
                       </div>
                     </div>					
                 </div>                
-                    <div class="row">
-                        <!-- <div class="col-md-5">
-                           <div id="container1"></div>
-                        </div> -->
-                        <div class="col-md-12">
-                           <div id="container2"></div>
-                        </div>
-                    </div>          
+                         
                 <div class="row" style="display: none;" id="tableDiv">
                   <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-header">
-                        <h4 class="card-title float-left">Appointment List</h4>
+                        <h4 class="card-title float-left"><b>Scheduling List</b></h4>
                       </div>
                       <div class="card-body">
                         <div class="clearfix">
                           <table class="table table-striped">
                             <thead>
                               <tr>
-                                <!-- <th></th> -->
-                                <th> Patient Name </th>
-                                <th>Confirmation</th>
-                                <th> Provider </th>
-                                <th> Age </th>
-                                <th> SMS Sent </th>
-                                <th> Appointment Date </th>
-                                <th> Schedule Date </th>
-                                <th> Probability </th>
+                                <th><b><center> Candidate </b></center></th>
+								<th><b><center> Skill </b></center></th>								
+                                <th><b><center> Phone </b></center></th> 
+								<th><b><center> Gender </b></center></th> 
+                                <th><b><center> Scheduler </b></center></th>                                
+                                <th><b><center> Interview Date </b></center></th>
+                                <th><b><center> Schedule Date </b></center></th>
+                                <th><b><center> Job Location</b></center></th>
+								<th><b><center> Native Location</b></center></th>
+								<th><b><center> Confirmation Status </b></center></th>
                               </tr>
                             </thead>
-                            <tbody id="tableData">                          
+							<tbody id="tableData">                          
                             </tbody>
                           </table>
                         </div>
@@ -250,6 +246,14 @@
                   </div>              
                 </div>
 
+					<div class="row">
+                        <!-- <div class="col-md-5">
+                           <div id="container1"></div>
+                        </div> -->
+                        <div class="col-md-12">
+                           <div id="container2"></div>
+                        </div>
+                    </div>    
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
