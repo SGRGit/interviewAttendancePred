@@ -5544,7 +5544,7 @@ input[type="button"].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: #F5F5F5;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125); }
   .card-header:first-child {
     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0; }
@@ -10323,15 +10323,16 @@ code {
 
 /* Footer */
 .footer {
-  background: #f2edf3;
-  border-top: 1px solid #e7dee9;
+  background-color: #ace7f8;
+  /* border-top: 1px solid #e7dee9; */
   padding: 30px 1rem;
   transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
   -ms-transition: all 0.25s ease;
   font-size: calc(0.875rem - 0.05rem);
-  font-family: "ubuntu-regular", sans-serif; }
+  font-family: "ubuntu-regular", sans-serif;
+  }
   .footer a {
     color: #1bcfb4;
     font-size: inherit; }
@@ -13368,7 +13369,11 @@ dl {
       width: 100%; } }
 
 .content-wrapper {
-  background: #f2edf3;
+  background: url('../images/img.gif');
+  background-size:500px 240px;
+  background-position:59px 103px;
+  background-repeat: no-repeat;
+  background-color :#ACE7F8;
   padding: 0.75rem 1.25rem;
   width: 100%;
   -webkit-box-flex: 1;
