@@ -108,8 +108,10 @@ var noShowCount = [];
 var highProbCount = [];
 var finalDateList = [];
 var test = 'Mon';
-//    var urls = 'http://localhost:7000/'
-	var urls = 'https://interviewattpredictor-app.herokuapp.com/caldata'
+    var urls ='https://interviewattpredictor-app.azurewebsites.net/caldata'
+	//var urls = 'http://localhost:5000/caldata'
+	//var urls = 'https://noshowcaldata.herokuapp.com'
+	//var urls = 'https://interviewattpredictor-app.herokuapp.com/caldata'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
@@ -163,7 +165,10 @@ function weeklyGraph(){
             backgroundColor: '#f2edf3',
         },
         title:{
-            text:'Monthly Trend of Interviews'
+			text:'Trend Chart of Interviews',
+			style: {
+                fontWeight: 'bold'
+            }
         },
         legend: {
             symbolWidth: 40,
@@ -214,7 +219,7 @@ function weeklyGraph(){
         },
         series: [
             {
-                name: 'Total Interviews',
+                name: 'Total Appointments',
                 //data: [0, 0, 11, 9, 0, 8],           
                 data : appointmentsCount,
                 dashStyle: 'ShortDashDot',
