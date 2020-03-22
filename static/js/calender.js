@@ -108,10 +108,10 @@ var noShowCount = [];
 var highProbCount = [];
 var finalDateList = [];
 var test = 'Mon';
-    var urls ='https://interviewattpredictor-app.azurewebsites.net/caldata'
+    //var urls ='https://interviewattpredictor-app.azurewebsites.net/caldata'
 	//var urls = 'http://localhost:5000/caldata'
 	//var urls = 'https://noshowcaldata.herokuapp.com'
-	//var urls = 'https://interviewattpredictor-app.herokuapp.com/caldata'
+	var urls = 'https://interviewattpredictor-app.herokuapp.com/caldata'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
