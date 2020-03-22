@@ -1,4 +1,4 @@
-﻿.mfp-popup.custom
+.mfp-popup.custom
 {
     color: #404040;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.35);
@@ -78,7 +78,7 @@
 }
 
 .mfp-month-view.custom
-{
+{max-height:790px;
 	 border:5px solid #747474;
 }
 
