@@ -110,5 +110,4 @@ if (name != null) {
         document.getElementById('Confirmation').value = '';
       }
   });
-
           
