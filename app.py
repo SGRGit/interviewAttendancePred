@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 import pickle
 from datetime import datetime
 import json
@@ -81,15 +83,48 @@ def submit():
         prediction = round(model.predict_proba(inp)[0][1] *100, 2)      
    
     global op
-    if candname =='Joyce Tick':
-        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate"), ("pred", prediction)))]))
-    elif candname =='Jack Dup':
-        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
-    elif candname =='Sam Buca':
-        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Varying Job and Native Locations"), ("pred", prediction)))]))
-    else:
-        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
+    #if candname =='Joyce Tick':
+    #        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate"), ("pred", prediction)))]))
+    #elif candname =='Jack Dup':
+    #    op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
+    #elif candname =='Sam Buca':
+    #    op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Varying Job and Native Locations"), ("pred", prediction)))]))
+    #else:
+    #    op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
      
+    #if prediction < 50 :
+    #    if confirmed == "0" and deltday < 7 and JobVsNative == "1":
+    #        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate"), ("pred", prediction)))]))
+    #    elif confirmed == "1" and deltday >= 7 and JobVsNative == "1":
+    #        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
+    #    elif confirmed == "1" and deltday < 7 and JobVsNative == "0":
+    #        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Varying Job and Native Locations"), ("pred", prediction)))]))
+    #    else:
+    #        op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
+    cond1 = (confirmed == "0")
+    cond2 = (deltday < 15)
+    cond3 = (JobVsNative == 1)
+    
+    if prediction < 50:
+       if all( [(cond1 == True) , (cond2 == True) , (cond3 == True)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate"), ("pred", prediction)))]))
+       elif all( [(cond1 == False) , (cond2 == True) , (cond3 == True)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", ""), ("pred", prediction)))]))
+       elif all( [(cond1 == True) , (cond2 == False) , (cond3 == True)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate and Appointment booked long ago"), ("pred", prediction)))]))
+       elif all( [(cond1 == False) , (cond2 == False) , (cond3 == True)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
+       elif all( [(cond1 == True) , (cond2 == True) , (cond3 == False)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate and Varying Job and Native Locations"), ("pred", prediction)))]))              
+       elif all( [(cond1 == False) , (cond2 == True) , (cond3 == False)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Varying Job and Native Locations"), ("pred", prediction)))]))
+       elif all( [(cond1 == True) , (cond2 == False) , (cond3 == False)] ):
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received from Candidate and Appointment booked long ago and Varying Job and Native Locations"), ("pred", prediction)))]))
+       else :
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago and Varying Job and Native Locations"), ("pred", prediction)))]))
+    else :
+           op = np.append(op, np.array([dict((("cd", candname),("gender", gender), ("phone", phone), ("Confirmed", confirmed),("scheduler", scheduler), ("jobloc", jobloc), ("natloc", natloc), ("skill",skill), ("JobVsNative", JobVsNative), ("intdt", str(intdt)), ("scdt", str(schdt)), ("insight", ""), ("pred", prediction)))]))
+        
     oplist = op.tolist()
     oplist.pop(0)
     print(oplist)
@@ -115,9 +150,9 @@ def submit():
     with open(int1_data_path, "r") as f:
         dataorg = json.load(f)
         f.close()
-    print(dataorg)
+    #print(dataorg)
     origdict = (dict(enumerate(dataorg)))
-    print(origdict)
+    #print(origdict)
     s1 = []
     for d in origdict.values():
         s1.append(d['cd'])
@@ -127,7 +162,7 @@ def submit():
             origdict[s1[i]] = origdict.pop(key)
     
     origdict.update(srcdict)
-    print(origdict)
+    #print(origdict)
   
     with open(int2_data_path, "w") as f:
         json.dump(origdict, f)
@@ -154,7 +189,7 @@ def submit():
         f.write(finop)
         f.close()
         
-    return render_template('appointment.html', prediction_text = 'Attendance Chance {} %'.format(prediction), candidate_name = format(candname))
+    return render_template('appointment.html', prediction_text = 'Attendance Chance {} %'.format(prediction), candidate_name = format(candname))    
  
 @app.route('/caldata')
 def event_calender():
@@ -221,7 +256,7 @@ def event_calender():
         "event": [
             {
             "color": "violet", 
-            "name": "Appointments", 
+            "name": "Schedules", 
             "value": df_dict[i]['Total']
             }, 
             #{
@@ -243,7 +278,104 @@ def event_calender():
         dlist.append(df_newdict.copy())
 
     return(jsonify(dlist))
+
+def genmodel():
+    base_dir = os.getcwd()
+    data_dir = os.path.join(base_dir, 'Code/RawData')
+    #Source File Path
+    #in_data_pref = os.path.join(data_dir, 'Input')
+    src_file_name = 'InterviewDat.csv'
+    src_data_path = os.path.join(data_dir , src_file_name)
+    print(src_data_path)
+
+    #Read raw source file for inteview
+    df_raw = pd.read_csv(src_data_path, index_col=None, parse_dates=["SchedulingDay", "InterviewDay"], infer_datetime_format=True)
+    df_raw["days_delta"] = (df_raw.InterviewDay - pd.to_datetime(df_raw.SchedulingDay.dt.date)).dt.days
     
+    # Renaming variables to strings that are a little easier to work with.
+    df_raw.columns = ['Candidate_Id', 'Interview_ID', 'Gender', 'Scheduled_Day', 'Interview_Day',
+                        'Cand_Loc', 'Job_Loc', 'Venue','Native_Loc','JobVsNative',
+                         'Permission(Y/N)', 'MeetingConflict(Y/N)', 'PriorCall(Y/N)', 'AlterantePhone(Y/N)',
+                        'ResumePrintout(Y/N)', 'VenueClarification(Y/N)', 'SharedLetter(Y/N)', 'Confirmed', 'Attended',
+                         'days_delta']
+    df_raw['Cand_Loc'].replace(['- cochin-'],['cochin'], inplace = True)
+    df_raw['Job_Loc'].replace(['- cochin-'],['cochin'], inplace = True)
+    df_raw['Venue'].replace(['- cochin-'],['cochin'], inplace = True)
+    df_raw['Permission(Y/N)'].replace(['na', 'not yet', 'yet to confirm'],['nan', 'tbd', 'tbd'], inplace = True)
+    df_raw['MeetingConflict(Y/N)'].replace(['na', 'not sure', 'cant say'],['nan', 'unsure', 'unsure'], inplace = True)
+    df_raw['PriorCall(Y/N)'].replace(['na', 'no dont'],['nan', 'no'], inplace = True)
+    df_raw['MeetingConflict(Y/N)'].replace(['na', 'not sure', 'cant say'], ['nan', 'unsure', 'unsure'], inplace = True)
+    df_raw['AlterantePhone(Y/N)'].replace(['na', 'no i have only thi number'], ['nan', 'no'], inplace = True)
+    df_raw['ResumePrintout(Y/N)'].replace(['na', 'not yet', 'no- will take it soon'], ['nan', 'ny', 'ny'], inplace = True)
+    df_raw['VenueClarification(Y/N)'].replace(['na', 'no- i need to check'], ['nan', 'no'], inplace = True)
+    df_raw['SharedLetter(Y/N)'].replace(['na', 'not sure', 'need to check', 'not yet', 'yet to check','havent checked'],['nan', 'unsure', 'unsure', 'unsure', 'unsure', 'unsure'], inplace = True)
+    df_raw['Confirmed'].replace(['Yes', 'No'],[1, 0], inplace = True)
+    df_raw['Attended'].replace(['Yes', 'No'],[1, 0], inplace = True)
+    
+    df_raw['Permission(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['MeetingConflict(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['PriorCall(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['AlterantePhone(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['ResumePrintout(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['VenueClarification(Y/N)'].replace({'Yes':1, 'No':0}, inplace=True)
+    df_raw['SharedLetter(Y/N)'].replace({'Yes':1, 'No':0, 'unsure':np.nan}, inplace=True)
+    df_raw['JobVsNative'].replace({True:1, False:0}, inplace=True)
+    
+    df_raw['Permission(Y/N)'].replace({'Yes':1, 'No':0,'Yet to confirm':np.nan, 'NO':0, 'yes':1, 'Na':np.nan,'Not yet':np.nan}, inplace=True)
+    df_raw['MeetingConflict(Y/N)'].replace({'Yes':1, 'No':0,'Not Sure':np.nan, 'Not sure':np.nan, 'yes':1, 'Na':np.nan,'cant Say':np.nan}, inplace=True)
+    df_raw['PriorCall(Y/N)'].replace({'Yes':1, 'No':0,'yes':1, 'Na':np.nan,'No Dont':np.nan}, inplace=True)
+    df_raw['AlterantePhone(Y/N)'].replace({'Yes':1, 'No':0,'yes':1, 'Na':np.nan,'No I have only thi number':0,'nan':np.nan}, inplace=True)
+    df_raw['ResumePrintout(Y/N)'].replace({'Yes':1, 'No':0,'yes':1, 'Na':np.nan,'No- will take it soon':0,'nan':np.nan,'Not Yet':0,'Not yet':0}, inplace=True)
+    df_raw['VenueClarification(Y/N)'].replace({'Yes':1, 'No':0,'yes':1, 'Na':np.nan,'No- I need to check':0,'nan':np.nan,'Not Yet':0,'Not yet':0,'Na':0,'no':0}, inplace=True)
+    df_raw['SharedLetter(Y/N)'].replace({'Yes':1, 'No':0,'yes':1, 'Na':np.nan,'Havent Checked':np.nan,'Need To Check':np.nan, 'Not sure':np.nan,'Yet to Check':np.nan,'Not Sure':np.nan,'nan':np.nan,'Not yet':np.nan,'Not Yet':0,'Not yet':0,'Na':0,'no':0}, inplace=True)
+    
+    categorical_features = ['Cand_Loc','Job_Loc','Venue','Native_Loc','Gender']
+    boolean_features = ['JobVsNative','Permission(Y/N)','MeetingConflict(Y/N)','PriorCall(Y/N)','AlterantePhone(Y/N)','ResumePrintout(Y/N)','VenueClarification(Y/N)','SharedLetter(Y/N)','Confirmed']
+
+    for feature in boolean_features:
+        df_raw[feature] = df_raw[feature].astype("bool")
+
+    for feature in categorical_features:
+        df_raw[feature] = df_raw[feature].astype("category")
+        
+    df_raw['Permission(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['MeetingConflict(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['PriorCall(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['AlterantePhone(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['ResumePrintout(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['VenueClarification(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['SharedLetter(Y/N)'].replace({True:1, False:0}, inplace=True)
+    df_raw['JobVsNative'].replace({True:1, False:0}, inplace=True)
+    df_raw['Confirmed'].replace({True:1, False:0}, inplace=True)
+    
+    one_hot_features = pd.get_dummies(df_raw.drop(["Candidate_Id","Interview_ID","Scheduled_Day","Interview_Day","Native_Loc","Venue","Job_Loc","Cand_Loc","Native_Loc","Gender","Attended"], axis=1)).columns
+    print(one_hot_features)
+    
+    X = pd.get_dummies(df_raw.drop(["Candidate_Id","Interview_ID","Scheduled_Day","Interview_Day","Native_Loc","Venue","Job_Loc","Cand_Loc","Native_Loc","Gender","Attended"], axis=1)).values
+    y = df_raw['Attended'].values
+
+    X = X.astype("float64")
+    y = y.astype("float64")
+
+    X = df_raw[one_hot_features]
+    y = df_raw["Attended"]
+    
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=.4, shuffle = True)
+    X_val, X_test, y_val, y_test = train_test_split(X_val, y_val, test_size=.5, shuffle = True)
+    
+    train_df = pd.DataFrame(data=X_train, columns=one_hot_features)
+    train_df["Attended"] = y_train
+    
+    rf = RandomForestClassifier(max_depth=5, n_estimators=10)
+    model_rf = rf.fit(X_train,y_train)
+    y_pred_rf = model_rf.predict(X_test)
+    
+    #Saving the model to disk
+    pickle.dump(model_rf, open('model.pkl', 'wb'))
+
+genmodel()   
+
+
 #@app.route('/refresh', methods=['GET', 'POST'])
 #def refresh():
 #    pyautogui.hotkey('ctrl', 'f5')
@@ -251,3 +383,5 @@ def event_calender():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+    
